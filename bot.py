@@ -20,6 +20,10 @@ FULL_PLAN_FILTER = filters.TEXT & ~filters.COMMAND & filters.Regex(
     r"(?i)(полный\s+план|план\s+поездки|весь\s+план|весь\s+маршрут|маршрут\s+поездки|полностью\s+план|все\s+дни|покажи\s+план)"
 )
 
+WEATHER_FILTER = filters.TEXT & ~filters.COMMAND & filters.Regex(
+    r"(?i)(погода|прогноз|температур|жарко|холодно|дожд|ветер|зонт|weather|forecast|rain|temperature)"
+)
+
 FOOD_FILTER = filters.TEXT & ~filters.COMMAND & filters.Regex(
     r"(?i)(где\s+поесть|что\s+поесть|куда\s+пойти\s+поесть|где\s+покушать|что\s+покушать|покушать|поесть|еда|ресторан|рестораны|кафе|ужин|обед|завтрак|тапас|паста|паэлья|аперитив|еще\s+мест|ещё\s+мест|еще\s+вариант|ещё\s+вариант|только\s+два\s+места)"
 )
@@ -52,6 +56,7 @@ def main():
     app.add_handler(MessageHandler(filters.PHOTO, photo_chat))
     app.add_handler(MessageHandler(filters.VOICE, voice_chat))
     app.add_handler(MessageHandler(FULL_PLAN_FILTER, cards_cmd))
+    app.add_handler(MessageHandler(WEATHER_FILTER, weather_cmd))
     app.add_handler(MessageHandler(FOOD_FILTER, food_cmd))
     app.add_handler(MessageHandler(TOURS_FILTER, tours_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, chat))
