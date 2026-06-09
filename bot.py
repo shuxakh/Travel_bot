@@ -6,6 +6,7 @@ from handlers import (
     today, budget, transport, map_cmd, help_cmd, chat, photo_chat
 )
 from api_handlers import weather_cmd, currency_cmd, apis_cmd
+from plan_handlers import plan_cmd
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -15,6 +16,7 @@ logging.basicConfig(
 def main():
     app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("plan", plan_cmd))
     app.add_handler(CommandHandler("madrid", madrid))
     app.add_handler(CommandHandler("barcelona", barcelona))
     app.add_handler(CommandHandler("rome", rome))
