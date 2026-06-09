@@ -1,4 +1,8 @@
 import logging
+import os
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
 from config import TELEGRAM_BOT_TOKEN
 from handlers import (
@@ -22,7 +26,27 @@ FOOD_FILTER = filters.TEXT & ~filters.COMMAND & filters.Regex(
     r"(?i)(где\s+поесть|что\s+поесть|куда\s+пойти\s+поесть|ресторан|рестораны|еда|кафе|ужин|обед|завтрак|тапас|паста|паэлья|аперитив)"
 )
 
+class HealthHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/plain; charset=utf-8")
+        self.end_headers()
+        self.wfile.write(b"Travel bot is running")
+
+    def log_message(self, format, *args):
+        return
+
+
+def start_health_server():
+    port = int(os.environ.get("PORT", "10000"))
+    server = HTTPServer(("0.0.0.0", port), HealthHandler)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    logging.info(f"Health server started on port {port}")
+
+
 def main():
+    start_health_server()
     app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("plan", plan_cmd))
