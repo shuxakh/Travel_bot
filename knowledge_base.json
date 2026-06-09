@@ -1,0 +1,430 @@
+{
+  "trip": {
+    "travelers": "Шухрат, жена, пожилой отец (3 человека)",
+    "dates": "17–26 июня 2026",
+    "route": "Ташкент → Мадрид → Барселона → Рим → Милан → Ташкент"
+  },
+  "flights": [
+    {
+      "date": "17 июня",
+      "from": "Ташкент (TAS)",
+      "to": "Мадрид (MAD)",
+      "flights": "TK-365 (06:05→09:30) + TK-1859 (13:25→16:55)",
+      "airline": "Turkish Airlines",
+      "transfer": "Стамбул, 3ч 55мин",
+      "baggage": "1 место"
+    },
+    {
+      "date": "19 июня",
+      "type": "поезд",
+      "from": "Мадрид Пуэрта де Аточа",
+      "to": "Барселона Сантс",
+      "time": "09:31–12:58",
+      "duration": "3ч 27мин",
+      "operator": "OUIGO",
+      "train": "06501"
+    },
+    {
+      "date": "21 июня",
+      "from": "Барселона BCN",
+      "to": "Рим FCO",
+      "time": "08:00–09:50",
+      "duration": "1ч 50мин",
+      "airline": "Vueling",
+      "flight": "VY6106"
+    },
+    {
+      "date": "24 июня",
+      "type": "поезд",
+      "from": "Рим Термини",
+      "to": "Милан Централе",
+      "time": "10:05–13:15",
+      "duration": "3ч 10мин",
+      "operator": "Italo",
+      "train": "9976"
+    },
+    {
+      "date": "26 июня",
+      "from": "Милан Мальпенса (MXP)",
+      "to": "Ташкент (TAS)",
+      "time": "20:50–06:05+1",
+      "duration": "5ч 15мин",
+      "airline": "Uzbekistan Airways",
+      "flight": "HY-256"
+    }
+  ],
+  "hotels": [
+    {
+      "city": "Мадрид",
+      "name": "Hostal Abadía Madrid 3*",
+      "dates": "17–19 июня (2 ночи)",
+      "rooms": "2 номера",
+      "breakfast": true,
+      "price_usd": 824,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Hostal+Abadia+Madrid"
+    },
+    {
+      "city": "Барселона",
+      "name": "Sercotel Caspe 4*",
+      "dates": "19–21 июня (2 ночи)",
+      "rooms": "2 номера",
+      "breakfast": true,
+      "price_usd": 1239,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Sercotel+Caspe+Barcelona"
+    },
+    {
+      "city": "Рим",
+      "name": "Raeli Hotel Lux 4*",
+      "dates": "21–24 июня (3 ночи)",
+      "rooms": "2 номера",
+      "breakfast": true,
+      "price_usd": 918,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Raeli+Hotel+Lux+Rome"
+    },
+    {
+      "city": "Милан",
+      "name": "Brunelleschi 4*",
+      "dates": "24–26 июня (2 ночи)",
+      "rooms": "2 номера",
+      "breakfast": true,
+      "price_usd": 974,
+      "maps": "https://www.google.com/maps/search/?api=1&query=Hotel+Brunelleschi+Milan"
+    }
+  ],
+  "cities": {
+    "madrid": {
+      "dates": "17–19 июня",
+      "transfer_airport": "$53 (уже оплачен)",
+      "attractions": [
+        {
+          "name": "Музей Прадо",
+          "price_eur": 15,
+          "hours": "Пн–Сб 10:00–20:00, Вс 10:00–19:00",
+          "note": "Бесплатно Пн–Сб 18:00–20:00 и Вс 17:00–19:00",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Museo+del+Prado+Madrid"
+        },
+        {
+          "name": "Королевский дворец",
+          "price_eur": 14,
+          "hours": "10:00–19:00 (летом до 20:00)",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Palacio+Real+Madrid"
+        },
+        {
+          "name": "Парк Ретиро",
+          "price_eur": 0,
+          "hours": "Всегда открыт",
+          "note": "Отличное место для отдыха пожилого человека, есть скамейки и тень",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Parque+del+Retiro+Madrid"
+        },
+        {
+          "name": "Площадь Пуэрта-дель-Соль",
+          "price_eur": 0,
+          "hours": "Всегда открыта",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Puerta+del+Sol+Madrid"
+        },
+        {
+          "name": "Площадь Майор",
+          "price_eur": 0,
+          "hours": "Всегда открыта",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Plaza+Mayor+Madrid"
+        },
+        {
+          "name": "Музей Тиссена",
+          "price_eur": 14,
+          "hours": "Вт–Вс 10:00–19:00",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Museo+Thyssen+Madrid"
+        },
+        {
+          "name": "Рынок Сан-Мигель",
+          "price_eur": 0,
+          "hours": "10:00–24:00",
+          "note": "Тапас, закуски, местная еда — отлично для обеда",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Mercado+San+Miguel+Madrid"
+        }
+      ],
+      "transport": {
+        "metro": "€1.50–2.00 за поездку, карта 10 поездок €12.20",
+        "taxi": "€3.40 посадка + €1.20/км, в среднем по городу €8–15",
+        "airport_fixed": "€33 фиксированный тариф аэропорт→центр",
+        "bus": "€1.50 за поездку",
+        "tip": "Рекомендуем метро — быстро и дёшево, лифты есть на большинстве станций"
+      },
+      "restaurants": [
+        {
+          "name": "Sobrino de Botín",
+          "type": "Традиционная испанская",
+          "avg_check_eur": 35,
+          "note": "Старейший ресторан мира по Гиннессу",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Sobrino+de+Botin+Madrid"
+        },
+        {
+          "name": "Casa Lucio",
+          "type": "Традиционная мадридская",
+          "avg_check_eur": 30,
+          "maps": "https://www.google.com/maps/search/?api=1&query=Casa+Lucio+Madrid"
+        },
+        {
+          "name": "Меню дня (menú del día)",
+          "type": "Любое кафе в обед",
+          "avg_check_eur": 12,
+          "note": "Первое + второе + напиток + хлеб — лучшее соотношение цена/качество"
+        }
+      ],
+      "food_budget_per_day": "€40–60 на троих (обед + ужин, без завтрака)"
+    },
+    "barcelona": {
+      "dates": "19–21 июня",
+      "attractions": [
+        {
+          "name": "Саграда Фамилия",
+          "price_eur": 26,
+          "price_with_towers_eur": 36,
+          "hours": "09:00–19:00",
+          "booking": "ОБЯЗАТЕЛЬНО бронировать заранее!",
+          "booking_url": "https://sagradafamilia.org/en/tickets",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Sagrada+Familia+Barcelona"
+        },
+        {
+          "name": "Парк Гуэль",
+          "price_eur": 10,
+          "hours": "08:00–20:30",
+          "booking": "Рекомендуется бронировать",
+          "booking_url": "https://parkguell.barcelona/en/tickets",
+          "note": "Много ступеней — для папы взять такси к верхнему входу",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Park+Guell+Barcelona"
+        },
+        {
+          "name": "Готический квартал",
+          "price_eur": 0,
+          "hours": "Всегда открыт",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Barri+Gotic+Barcelona"
+        },
+        {
+          "name": "Ла Рамбла",
+          "price_eur": 0,
+          "hours": "Всегда открыта",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Las+Ramblas+Barcelona"
+        },
+        {
+          "name": "Дом Батльо",
+          "price_eur": 35,
+          "hours": "09:00–21:00",
+          "booking_url": "https://www.casabatllo.es/en/tickets/",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Casa+Batllo+Barcelona"
+        },
+        {
+          "name": "Монтжуик (замок и фуникулёр)",
+          "price_eur": 10.5,
+          "hours": "10:00–20:00",
+          "note": "Панорамный вид на город, хорошо для всей семьи",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Montjuic+Barcelona"
+        },
+        {
+          "name": "Пляж Барселонета",
+          "price_eur": 0,
+          "hours": "Всегда открыт",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Barceloneta+Beach"
+        }
+      ],
+      "transport": {
+        "metro": "Карта T-Casual 10 поездок €12.15",
+        "airport_bus": "Аэробус BCN→центр €5.90, 35 мин",
+        "airport_taxi": "€35–45",
+        "hop_on_hop_off": "€30/день — рекомендуем для папы, объезжает все главные места",
+        "tip": "Hop-on Hop-off автобус идеален — можно выходить у любой достопримечательности"
+      },
+      "restaurants": [
+        {
+          "name": "Рынок Бокерия",
+          "type": "Свежие продукты, закуски",
+          "avg_check_eur": 12,
+          "maps": "https://www.google.com/maps/search/?api=1&query=La+Boqueria+Barcelona"
+        },
+        {
+          "name": "Tapas в Готическом квартале",
+          "avg_check_eur": 25,
+          "note": "На троих"
+        },
+        {
+          "name": "Морепродукты на набережной",
+          "avg_check_eur": 30,
+          "note": "С человека, свежая рыба и паэлья"
+        }
+      ],
+      "food_budget_per_day": "€50–70 на троих"
+    },
+    "rome": {
+      "dates": "21–24 июня",
+      "attractions": [
+        {
+          "name": "Колизей + Форум + Палатин",
+          "price_eur": 18,
+          "hours": "09:00–19:30",
+          "booking": "ОБЯЗАТЕЛЬНО бронировать онлайн!",
+          "booking_url": "https://www.coopculture.it/en/colosseo-e-shop.cfm",
+          "note": "Без брони очередь 2–3 часа",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Colosseum+Rome"
+        },
+        {
+          "name": "Ватикан + Сикстинская капелла",
+          "price_eur": 20,
+          "hours": "Пн–Сб 09:00–18:00",
+          "booking": "ОБЯЗАТЕЛЬНО бронировать!",
+          "booking_url": "https://www.museivaticani.va/content/museivaticani/en/tickets.html",
+          "note": "Закрыт по воскресеньям (кроме последнего воскресенья месяца — бесплатно)",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Vatican+Museums+Rome"
+        },
+        {
+          "name": "Фонтан Треви",
+          "price_eur": 0,
+          "hours": "Всегда открыт",
+          "note": "Лучше приходить рано утром (до 8:00) — меньше народу",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Trevi+Fountain+Rome"
+        },
+        {
+          "name": "Испанская лестница",
+          "price_eur": 0,
+          "hours": "Всегда открыта",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Spanish+Steps+Rome"
+        },
+        {
+          "name": "Пантеон",
+          "price_eur": 5,
+          "hours": "09:00–19:00",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Pantheon+Rome"
+        },
+        {
+          "name": "Замок Ангела",
+          "price_eur": 14,
+          "hours": "09:00–19:30",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Castel+Sant+Angelo+Rome"
+        },
+        {
+          "name": "Галерея Боргезе",
+          "price_eur": 15,
+          "hours": "09:00–19:00",
+          "booking": "ОБЯЗАТЕЛЬНО бронировать за 3+ дня!",
+          "booking_url": "https://borghese.gallery/",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Borghese+Gallery+Rome"
+        }
+      ],
+      "transport": {
+        "metro_bus": "€1.50 за поездку, 72ч билет €18 на человека",
+        "airport_taxi": "€55 фиксированный тариф FCO→центр",
+        "tram": "Трамвай №8 удобен для центра, те же билеты",
+        "tip": "Центр Рима компактный — многое можно пройти пешком, но для папы берите такси на длинные отрезки"
+      },
+      "restaurants": [
+        {
+          "name": "Траттории в Трастевере",
+          "type": "Традиционная римская кухня",
+          "avg_check_eur": 18,
+          "note": "С человека. Паста карбонара, качио э пепе — must try",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Trastevere+restaurants+Rome"
+        },
+        {
+          "name": "Избегать ресторанов у Треви и Ватикана",
+          "avg_check_eur": 40,
+          "note": "Цены в 2–3 раза выше среднего, качество хуже"
+        },
+        {
+          "name": "Gelato",
+          "avg_check_eur": 3,
+          "note": "€2.50–4 за шарик. Искать вывеску 'artigianale' — настоящее мороженое"
+        },
+        {
+          "name": "Кофе эспрессо",
+          "avg_check_eur": 1.2,
+          "note": "Стоя у барной стойки — €1–1.50. Сидя — в 2 раза дороже"
+        }
+      ],
+      "food_budget_per_day": "€45–65 на троих"
+    },
+    "milan": {
+      "dates": "24–26 июня",
+      "attractions": [
+        {
+          "name": "Дуомо (снаружи)",
+          "price_eur": 0,
+          "hours": "Всегда открыт",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Duomo+Milan"
+        },
+        {
+          "name": "Дуомо (внутри)",
+          "price_eur": 3,
+          "hours": "08:00–19:00",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Duomo+di+Milano+interior"
+        },
+        {
+          "name": "Крыша Дуомо",
+          "price_eur": 14,
+          "hours": "09:00–19:00",
+          "note": "Лифт доступен — хорошо для папы",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Duomo+Milan+roof+terraces"
+        },
+        {
+          "name": "Тайная вечеря Да Винчи",
+          "price_eur": 20,
+          "hours": "Вт–Вс 08:15–19:00",
+          "booking": "БРОНИРОВАТЬ ЗА 2–3 МЕСЯЦА. Скорее всего недоступно — проверить:",
+          "booking_url": "https://www.vivaticket.com/it/biglietto/cenacolo-vinciano/158973",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Last+Supper+Leonardo+Milan"
+        },
+        {
+          "name": "Галерея Витторио Эммануэле II",
+          "price_eur": 0,
+          "hours": "Всегда открыта",
+          "note": "Рядом с Дуомо, красивая архитектура, хорошие кафе",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Galleria+Vittorio+Emanuele+II+Milan"
+        },
+        {
+          "name": "Замок Сфорца",
+          "price_eur": 5,
+          "hours": "09:00–17:30",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Castello+Sforzesco+Milan"
+        },
+        {
+          "name": "Район Навильи (каналы)",
+          "price_eur": 0,
+          "hours": "Всегда открыт",
+          "note": "Вечером очень красиво, много ресторанов и баров",
+          "maps": "https://www.google.com/maps/search/?api=1&query=Navigli+Milan"
+        }
+      ],
+      "transport": {
+        "metro": "€2.20 за поездку, 24ч билет €7.60, 48ч €13.80",
+        "airport_mxp_taxi": "€100–120 центр→Мальпенса",
+        "airport_mxp_train": "Malpensa Express €13, 50 мин от Milano Centrale",
+        "tip": "На обратный рейс 26 июня берите поезд Malpensa Express — дёшево и без пробок. Выезжать не позже 17:30 для рейса 20:50"
+      },
+      "restaurants": [
+        {
+          "name": "Mercato Centrale Milano",
+          "type": "Рынок с едой",
+          "avg_check_eur": 12,
+          "maps": "https://www.google.com/maps/search/?api=1&query=Mercato+Centrale+Milano"
+        },
+        {
+          "name": "Aperitivo (аперитив с едой)",
+          "avg_check_eur": 12,
+          "note": "€10–15 с человека, включает напиток и шведский стол закусок. С 18:00"
+        },
+        {
+          "name": "Ризотто и оссобуко",
+          "avg_check_eur": 20,
+          "note": "Традиционные блюда Милана, €16–22 с человека в хорошей траттории"
+        }
+      ],
+      "food_budget_per_day": "€45–60 на троих"
+    }
+  },
+  "total_budget": {
+    "hotels_usd": 3955,
+    "flights_estimated_usd": 1200,
+    "transfer_madrid_usd": 53,
+    "food_9_days_eur": 1350,
+    "attractions_eur": 380,
+    "transport_local_eur": 160,
+    "total_estimated_usd": 7500
+  }
+}
