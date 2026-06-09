@@ -2,17 +2,21 @@ import logging
 from telegram import Update
 from telegram.ext import ContextTypes
 from external_apis import (
-    get_weather, convert_currency, extract_amount, detect_city,
-    current_trip_city, api_status, flight_status, extract_flight_number
+    get_weather, get_trip_weather, convert_currency, extract_amount,
+    detect_city_for_weather, current_trip_city, is_trip_weather_question,
+    api_status, flight_status, extract_flight_number
 )
 
 logger = logging.getLogger(__name__)
 
 async def weather_cmd(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     text = update.message.text or ""
-    city_key = detect_city(text, current_trip_city())
+    city_key = detect_city_for_weather(text, current_trip_city())
     try:
-        await update.message.reply_text(await get_weather(city_key))
+        if is_trip_weather_question(text):
+            await update.message.reply_text(await get_trip_weather(city_key))
+        else:
+            await update.message.reply_text(await get_weather(city_key))
     except Exception as e:
         logger.exception(f"Weather API error: {e}")
         await update.message.reply_text("Не получилось получить погоду. Попробуйте позже.")
