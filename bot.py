@@ -1,8 +1,4 @@
 import logging
-import os
-import threading
-from http.server import BaseHTTPRequestHandler, HTTPServer
-
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
 from config import TELEGRAM_BOT_TOKEN
 from handlers import (
@@ -31,27 +27,7 @@ TOURS_FILTER = filters.TEXT & ~filters.COMMAND & filters.Regex(
     r"(?i)(getyourguide|экскурс|тур|туры|билет|билеты|skip\s*the\s*line|гид|купить\s+билет|колиз|ватикан|саград|гуэль|прадо|дуомо|пантеон)"
 )
 
-class HealthHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/plain; charset=utf-8")
-        self.end_headers()
-        self.wfile.write(b"Travel bot is running")
-
-    def log_message(self, format, *args):
-        return
-
-
-def start_health_server():
-    port = int(os.environ.get("PORT", "10000"))
-    server = HTTPServer(("0.0.0.0", port), HealthHandler)
-    thread = threading.Thread(target=server.serve_forever, daemon=True)
-    thread.start()
-    logging.info(f"Health server started on port {port}")
-
-
 def main():
-    start_health_server()
     app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("plan", plan_cmd))
@@ -77,7 +53,7 @@ def main():
     app.add_handler(MessageHandler(FOOD_FILTER, food_cmd))
     app.add_handler(MessageHandler(TOURS_FILTER, tours_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, chat))
-    logging.info("Бот запущен")
+    logging.info("Бот запущен на Fly.io")
     app.run_polling()
 
 if __name__ == "__main__":
