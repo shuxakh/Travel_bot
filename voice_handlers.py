@@ -10,14 +10,12 @@ from config import OPENAI_API_KEY
 from handlers import ask_gpt
 
 logger = logging.getLogger(__name__)
-client = AsyncOpenAI(api_key=OPENAI_API_KEY)
+client = AsyncOpenAI(api_key=OPENAI_API_KEY, timeout=45)
 
 
 async def voice_chat(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     """Понимает голосовые сообщения Telegram и отвечает текстом."""
     user_id = update.effective_user.id
-
-    await update.message.chat.send_action("typing")
     temp_path = None
 
     try:
@@ -26,21 +24,35 @@ async def voice_chat(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("Отправьте именно голосовое сообщение.")
             return
 
+        duration = voice.duration or 0
+        if duration > 60:
+            await update.message.reply_text("🎙 Голосовое слишком длинное. Пока лучше отправлять до 60 секунд.")
+            return
+
+        await update.message.chat.send_action("typing")
+        await update.message.reply_text("🎙 Голосовое получил. Сейчас распознаю...")
+        logger.info(f"Voice received: duration={duration}, file_id={voice.file_id}")
+
         tg_file = await voice.get_file()
         voice_data = await tg_file.download_as_bytearray()
+        logger.info(f"Voice downloaded: {len(voice_data)} bytes")
 
         with tempfile.NamedTemporaryFile(delete=False, suffix=".ogg") as tmp:
             tmp.write(bytes(voice_data))
             temp_path = tmp.name
 
+        # Telegram voice приходит в OGG/OPUS. OpenAI Whisper нормально принимает .ogg.
         with open(temp_path, "rb") as audio_file:
             transcription = await client.audio.transcriptions.create(
                 model="whisper-1",
                 file=audio_file,
+                response_format="text",
                 language="ru",
             )
 
-        text = (transcription.text or "").strip()
+        text = str(transcription or "").strip()
+        logger.info(f"Voice transcribed: {text[:120]}")
+
         if not text:
             await update.message.reply_text("Не получилось разобрать голос. Попробуйте сказать чуть чётче.")
             return
@@ -51,8 +63,10 @@ async def voice_chat(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(answer, disable_web_page_preview=True)
 
     except Exception as e:
-        logger.exception(f"Voice message error: {e}")
-        await update.message.reply_text("Не получилось разобрать голосовое сообщение. Попробуйте ещё раз.")
+        logger.exception(f"Voice message error: {type(e).__name__}: {e}")
+        await update.message.reply_text(
+            "Не получилось разобрать голосовое. Проверьте, что OPENAI_API_KEY работает, и попробуйте короткое голосовое до 20 секунд."
+        )
 
     finally:
         if temp_path:
