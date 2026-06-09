@@ -8,6 +8,7 @@ from handlers import (
 from api_handlers import weather_cmd, currency_cmd, apis_cmd, flight_cmd
 from plan_handlers import plan_cmd, cards_cmd
 from food_handlers import food_cmd
+from voice_handlers import voice_chat
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -41,6 +42,7 @@ def main():
     app.add_handler(CommandHandler("flight", flight_cmd))
     app.add_handler(CommandHandler("apis", apis_cmd))
     app.add_handler(CommandHandler("help", help_cmd))
+    app.add_handler(MessageHandler(filters.VOICE, voice_chat))
     app.add_handler(MessageHandler(filters.PHOTO, photo_chat))
     app.add_handler(MessageHandler(FULL_PLAN_FILTER, cards_cmd))
     app.add_handler(MessageHandler(FOOD_FILTER, food_cmd))
