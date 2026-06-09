@@ -43,7 +43,7 @@ https://www.google.com/maps/search/?api=1&query=La+Boqueria+Barcelona
 20 июня — Гауди + Монжуик
 1) Саграда Фамилия — бронировать заранее
 https://www.google.com/maps/search/?api=1&query=Sagrada+Familia+Barcelona
-2) Парк Гуэль — лучше такси к верхнему входу, чтобы не утомить отца
+2) Парк Гуэль — лучше такси к верхнему входу, чтобы не было лишней нагрузки
 https://www.google.com/maps/search/?api=1&query=Park+Guell+Barcelona
 3) Дом Батльо
 https://www.google.com/maps/search/?api=1&query=Casa+Batllo+Barcelona
@@ -105,7 +105,7 @@ https://www.google.com/maps/search/?api=1&query=Lake+Como+Como
 https://www.google.com/maps/search/?api=1&query=Como+Italy
 3) По желанию: фуникулёр Como → Brunate
 https://www.google.com/maps/search/?api=1&query=Funicolare+Como+Brunate
-Совет: если отец устанет или будет жара — оставить только набережную, кафе и короткую прогулку.
+Совет: если будет жарко или кто-то устанет — оставить только набережную, кафе и короткую прогулку.
 
 26 июня — вылет домой
 Утро: спокойная прогулка/сборы
@@ -132,7 +132,7 @@ CARD_PARTS = [
     },
     {
         "photo": "https://source.unsplash.com/1200x800/?lake,como,italy",
-        "caption": "🏞 ОЗЕРО КОМО • 25 июня\n\n🚆 Milano Centrale → Como S. Giovanni\n⏱ 40–60 минут, примерно €5–10 в одну сторону\n🌊 Прогулка по набережной Комо\n🚠 По желанию: фуникулёр Como → Brunate\n👴 Если отец устанет: набережная + кафе + короткая прогулка\n\nМаршрут:\nhttps://www.google.com/maps/dir/?api=1&origin=Milano+Centrale&destination=Como+S.+Giovanni",
+        "caption": "🏞 ОЗЕРО КОМО • 25 июня\n\n🚆 Milano Centrale → Como S. Giovanni\n⏱ 40–60 минут, примерно €5–10 в одну сторону\n🌊 Прогулка по набережной Комо\n🚠 По желанию: фуникулёр Como → Brunate\n💡 Лёгкий вариант: набережная + кафе + короткая прогулка\n\nМаршрут:\nhttps://www.google.com/maps/dir/?api=1&origin=Milano+Centrale&destination=Como+S.+Giovanni",
     },
     {
         "photo": "https://source.unsplash.com/1200x800/?airport,travel,flight",
