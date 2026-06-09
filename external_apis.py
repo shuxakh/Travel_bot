@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timezone, date
 from urllib.parse import quote_plus
 import os
 import re
@@ -10,6 +10,14 @@ CITY_COORDS = {
     "rome": {"name_ru": "Рим", "lat": 41.9028, "lon": 12.4964, "timezone": "Europe/Rome"},
     "milan": {"name_ru": "Милан", "lat": 45.4642, "lon": 9.1900, "timezone": "Europe/Rome"},
     "como": {"name_ru": "Комо", "lat": 45.8081, "lon": 9.0852, "timezone": "Europe/Rome"},
+}
+
+TRIP_DATES = {
+    "madrid": (date(2026, 6, 17), date(2026, 6, 19)),
+    "barcelona": (date(2026, 6, 19), date(2026, 6, 21)),
+    "rome": (date(2026, 6, 21), date(2026, 6, 24)),
+    "milan": (date(2026, 6, 24), date(2026, 6, 26)),
+    "como": (date(2026, 6, 25), date(2026, 6, 25)),
 }
 
 WEATHER_CODES_RU = {
@@ -30,6 +38,25 @@ def detect_city(text: str, default: str = "milan") -> str:
     return default
 
 
+def detect_city_for_weather(text: str, default: str = "milan") -> str:
+    """Определяет город для погоды. Если пользователь говорит 'там/туда' без города, чаще всего в этой поездке он спрашивает про Рим."""
+    detected = detect_city(text, "")
+    if detected:
+        return detected
+    t = (text or "").lower()
+    if any(x in t for x in ["там", "туда", "долетим", "прилет", "когда мы будем", "во время поездки"]):
+        return "rome"
+    return default
+
+
+def is_trip_weather_question(text: str) -> bool:
+    t = (text or "").lower()
+    return any(x in t for x in [
+        "когда мы будем", "будем там", "долетим", "прилет", "во время поездки",
+        "в наши даты", "наши даты", "21", "22", "23", "24", "25", "26", "июн"
+    ])
+
+
 def current_trip_city() -> str:
     today = datetime.now(timezone.utc).date()
     if today in [datetime(2026, 6, 17).date(), datetime(2026, 6, 18).date()]: return "madrid"
@@ -41,6 +68,11 @@ def current_trip_city() -> str:
 
 def maps_search(query: str) -> str:
     return "https://www.google.com/maps/search/?api=1&query=" + quote_plus(query)
+
+
+def _date_ru(d: date) -> str:
+    months = {6: "июня"}
+    return f"{d.day} {months.get(d.month, '')}".strip()
 
 
 async def get_weather(city_key: str) -> str:
@@ -82,6 +114,71 @@ async def get_weather(city_key: str) -> str:
     )
 
 
+async def get_trip_weather(city_key: str) -> str:
+    city = CITY_COORDS.get(city_key, CITY_COORDS["rome"])
+    start, end = TRIP_DATES.get(city_key, TRIP_DATES["rome"])
+    today = datetime.now(timezone.utc).date()
+    max_forecast_date = today.replace()  # just for readability
+    max_forecast_date = today.fromordinal(today.toordinal() + 15)
+
+    if start > max_forecast_date:
+        return (
+            f"🌤 Погода — {city['name_ru']} на даты поездки ({_date_ru(start)}–{_date_ru(end)})\n"
+            f"Точный прогноз ещё рано смотреть: сервисы обычно дают нормальный прогноз примерно на 10–16 дней вперёд.\n"
+            f"Ближе к вылету я смогу проверить точнее. Обычно в конце июня там тепло/жарко: лучше планировать воду, кепку и SPF."
+        )
+
+    forecast_days = min(16, max(1, (end - today).days + 1))
+    api_url = "https://api.open-meteo.com/v1/forecast"
+    params = {
+        "latitude": city["lat"], "longitude": city["lon"],
+        "daily": "temperature_2m_max,temperature_2m_min,precipitation_probability_max,uv_index_max,weather_code",
+        "forecast_days": forecast_days,
+        "timezone": city["timezone"],
+    }
+    async with httpx.AsyncClient(timeout=12) as http:
+        response = await http.get(api_url, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+    daily = data.get("daily", {})
+    dates = daily.get("time") or []
+    tmaxs = daily.get("temperature_2m_max") or []
+    tmins = daily.get("temperature_2m_min") or []
+    rains = daily.get("precipitation_probability_max") or []
+    uvs = daily.get("uv_index_max") or []
+    codes = daily.get("weather_code") or []
+
+    lines = [f"🌤 Прогноз — {city['name_ru']} на даты поездки ({_date_ru(start)}–{_date_ru(end)})"]
+    max_rain = 0
+    max_uv = 0
+    max_temp = None
+
+    for i, ds in enumerate(dates):
+        d = date.fromisoformat(ds)
+        if start <= d <= end:
+            tmin = tmins[i] if i < len(tmins) else None
+            tmax = tmaxs[i] if i < len(tmaxs) else None
+            rain = rains[i] if i < len(rains) else None
+            uv = uvs[i] if i < len(uvs) else None
+            desc = WEATHER_CODES_RU.get(codes[i] if i < len(codes) else None, "погода уточняется")
+            if rain is not None: max_rain = max(max_rain, rain)
+            if uv is not None: max_uv = max(max_uv, uv)
+            if tmax is not None: max_temp = tmax if max_temp is None else max(max_temp, tmax)
+            lines.append(f"• {_date_ru(d)}: {tmin}–{tmax}°C, {desc}, осадки {rain}%, UV {uv}")
+
+    if len(lines) == 1:
+        return await get_weather(city_key)
+
+    advice = []
+    if max_temp is not None and max_temp >= 28: advice.append("вода + кепка")
+    if max_rain >= 40: advice.append("зонт/лёгкий дождевик")
+    if max_uv >= 6: advice.append("SPF")
+    if not advice: advice.append("одежда для тёплых прогулок")
+    lines.append(f"Совет: {', '.join(advice)}.")
+    return "\n".join(lines)
+
+
 async def convert_currency(amount: float, from_currency: str = "EUR", to_currency: str = "USD") -> str:
     api_url = "https://api.frankfurter.app/latest"
     params = {"amount": amount, "from": from_currency.upper(), "to": to_currency.upper()}
@@ -98,7 +195,7 @@ async def convert_currency(amount: float, from_currency: str = "EUR", to_currenc
 async def flight_status(flight_number: str) -> str:
     api_key = os.getenv("AVIATIONSTACK_API_KEY", "")
     if not api_key:
-        return "✈️ AviationStack не подключён. Добавьте AVIATIONSTACK_API_KEY в Render Environment."
+        return "✈️ AviationStack не подключён. Добавьте AVIATIONSTACK_API_KEY в Fly secrets."
     flight_number = (flight_number or "").upper().replace("-", "").strip()
     if not flight_number:
         return "Напишите номер рейса. Пример: /flight VY6106"
