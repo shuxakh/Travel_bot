@@ -113,6 +113,44 @@ https://www.google.com/maps/search/?api=1&query=Funicolare+Como+Brunate
 20:50 — рейс HY-256 Милан → Ташкент"""
 ]
 
+CARD_PARTS = [
+    {
+        "photo": "https://source.unsplash.com/1200x800/?madrid,spain,travel",
+        "caption": "🇪🇸 МАДРИД • 17–19 июня\n\n🏨 Hostal Abadía Madrid\n✈️ 17 июня: прилёт 16:55, трансфер, лёгкий вечер\n🏛 18 июня: Королевский дворец, Пуэрта-дель-Соль, Пласа Майор, Прадо\n🚆 19 июня: поезд в Барселону 09:31–12:58\n\nКарта отеля:\nhttps://www.google.com/maps/search/?api=1&query=Hostal+Abadia+Madrid",
+    },
+    {
+        "photo": "https://source.unsplash.com/1200x800/?barcelona,sagrada,familia",
+        "caption": "🇪🇸 БАРСЕЛОНА • 19–21 июня\n\n🏨 Sercotel Caspe\n🌙 19 июня: Готический квартал + Бокерия\n🏛 20 июня: Саграда Фамилия, Парк Гуэль, Дом Батльо, Монжуик\n✈️ 21 июня: вылет в Рим 08:00–09:50\n\nКарта отеля:\nhttps://www.google.com/maps/search/?api=1&query=Sercotel+Caspe+Barcelona",
+    },
+    {
+        "photo": "https://source.unsplash.com/1200x800/?rome,colosseum,italy",
+        "caption": "🇮🇹 РИМ • 21–24 июня\n\n🏨 Raeli Hotel Lux\n🌙 21 июня: Фонтан Треви + Трастевере\n🏛 22 июня: Колизей, Форум, Палатин, Пантеон\n⛪ 23 июня: Ватикан, Сикстинская капелла, Испанская лестница\n🚆 24 июня: поезд в Милан 10:05–13:15\n\nКарта отеля:\nhttps://www.google.com/maps/search/?api=1&query=Raeli+Hotel+Lux+Rome",
+    },
+    {
+        "photo": "https://source.unsplash.com/1200x800/?milan,duomo,italy",
+        "caption": "🇮🇹 МИЛАН • 24 июня\n\n🏨 Brunelleschi\n🚆 Приезд из Рима в 13:15\n🏛 Лёгкая прогулка: Дуомо + Галерея Витторио Эммануэле II\n🍽 Вечером аперитив / ужин без перегруза\n\nКарта отеля:\nhttps://www.google.com/maps/search/?api=1&query=Hotel+Brunelleschi+Milan",
+    },
+    {
+        "photo": "https://source.unsplash.com/1200x800/?lake,como,italy",
+        "caption": "🏞 ОЗЕРО КОМО • 25 июня\n\n🚆 Milano Centrale → Como S. Giovanni\n⏱ 40–60 минут, примерно €5–10 в одну сторону\n🌊 Прогулка по набережной Комо\n🚠 По желанию: фуникулёр Como → Brunate\n👴 Если отец устанет: набережная + кафе + короткая прогулка\n\nМаршрут:\nhttps://www.google.com/maps/dir/?api=1&origin=Milano+Centrale&destination=Como+S.+Giovanni",
+    },
+    {
+        "photo": "https://source.unsplash.com/1200x800/?airport,travel,flight",
+        "caption": "✈️ ВЫЛЕТ ДОМОЙ • 26 июня\n\n🌅 Утро: спокойно, без перегруза\n🧳 Сборы и выезд из отеля\n🚆 Malpensa Express или такси до MXP\n⏰ Выезжать не позже 17:30\n✈️ Рейс HY-256 Милан → Ташкент в 20:50\n\nАэропорт Мальпенса:\nhttps://www.google.com/maps/search/?api=1&query=Milan+Malpensa+Airport",
+    },
+]
+
 async def plan_cmd(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     for part in PLAN_PARTS:
         await update.message.reply_text(part, disable_web_page_preview=True)
+
+async def cards_cmd(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("🧳 План поездки в формате карточек. Отправляю по частям, чтобы не было каши.")
+    for card in CARD_PARTS:
+        try:
+            await update.message.reply_photo(
+                photo=card["photo"],
+                caption=card["caption"]
+            )
+        except Exception:
+            await update.message.reply_text(card["caption"], disable_web_page_preview=True)
