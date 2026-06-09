@@ -10,6 +10,7 @@ from plan_handlers import plan_cmd, cards_cmd
 from food_handlers import food_cmd
 from tours_handlers import tours_cmd
 from voice_handlers import voice_chat
+from phrase_tts_handlers import spanish_phrase_cmd
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -18,6 +19,10 @@ logging.basicConfig(
 
 FULL_PLAN_FILTER = filters.TEXT & ~filters.COMMAND & filters.Regex(
     r"(?i)(полный\s+план|план\s+поездки|весь\s+план|весь\s+маршрут|маршрут\s+поездки|полностью\s+план|все\s+дни|покажи\s+план)"
+)
+
+SPANISH_PHRASE_FILTER = filters.TEXT & ~filters.COMMAND & filters.Regex(
+    r"(?i)(скажи\s+как\s+будет\s+на\s+испанск|как\s+сказать\s+по[-\s]?испанск|переведи\s+на\s+испанск|по[-\s]?испански)"
 )
 
 WEATHER_FILTER = filters.TEXT & ~filters.COMMAND & filters.Regex(
@@ -56,6 +61,7 @@ def main():
     app.add_handler(MessageHandler(filters.PHOTO, photo_chat))
     app.add_handler(MessageHandler(filters.VOICE, voice_chat))
     app.add_handler(MessageHandler(FULL_PLAN_FILTER, cards_cmd))
+    app.add_handler(MessageHandler(SPANISH_PHRASE_FILTER, spanish_phrase_cmd))
     app.add_handler(MessageHandler(WEATHER_FILTER, weather_cmd))
     app.add_handler(MessageHandler(FOOD_FILTER, food_cmd))
     app.add_handler(MessageHandler(TOURS_FILTER, tours_cmd))
