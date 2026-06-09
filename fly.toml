@@ -1,4 +1,4 @@
-app = "travel-assistant-mobigeek"
+app = "mobigeek-travel-bot-2026"
 primary_region = "fra"
 
 [build]
