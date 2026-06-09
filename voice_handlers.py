@@ -1,4 +1,5 @@
 import logging
+import re
 import tempfile
 from pathlib import Path
 
@@ -8,9 +9,15 @@ from telegram.ext import ContextTypes
 
 from config import OPENAI_API_KEY
 from handlers import ask_gpt
+from external_apis import get_weather, detect_city, current_trip_city
 
 logger = logging.getLogger(__name__)
 client = AsyncOpenAI(api_key=OPENAI_API_KEY, timeout=45)
+
+WEATHER_VOICE_RE = re.compile(
+    r"(погода|прогноз|температур|жарко|холодно|дожд|ветер|зонт|weather|forecast|rain|temperature)",
+    re.IGNORECASE,
+)
 
 
 async def voice_chat(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
@@ -59,7 +66,12 @@ async def voice_chat(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
 
         await update.message.reply_text(f"🎙 Я понял:\n{text}")
 
-        answer = await ask_gpt(user_id, text)
+        if WEATHER_VOICE_RE.search(text):
+            city_key = detect_city(text, current_trip_city())
+            answer = await get_weather(city_key)
+        else:
+            answer = await ask_gpt(user_id, text)
+
         await update.message.reply_text(answer, disable_web_page_preview=True)
 
     except Exception as e:
