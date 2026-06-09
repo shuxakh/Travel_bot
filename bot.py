@@ -12,6 +12,7 @@ from handlers import (
 from api_handlers import weather_cmd, currency_cmd, apis_cmd, flight_cmd
 from plan_handlers import plan_cmd, cards_cmd
 from food_handlers import food_cmd
+from tours_handlers import tours_cmd
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -24,6 +25,10 @@ FULL_PLAN_FILTER = filters.TEXT & ~filters.COMMAND & filters.Regex(
 
 FOOD_FILTER = filters.TEXT & ~filters.COMMAND & filters.Regex(
     r"(?i)(где\s+поесть|что\s+поесть|куда\s+пойти\s+поесть|где\s+покушать|что\s+покушать|покушать|поесть|еда|ресторан|рестораны|кафе|ужин|обед|завтрак|тапас|паста|паэлья|аперитив|еще\s+мест|ещё\s+мест|еще\s+вариант|ещё\s+вариант|только\s+два\s+места)"
+)
+
+TOURS_FILTER = filters.TEXT & ~filters.COMMAND & filters.Regex(
+    r"(?i)(getyourguide|экскурс|тур|туры|билет|билеты|skip\s*the\s*line|гид|купить\s+билет|колиз|ватикан|саград|гуэль|прадо|дуомо|пантеон)"
 )
 
 class HealthHandler(BaseHTTPRequestHandler):
@@ -52,6 +57,8 @@ def main():
     app.add_handler(CommandHandler("plan", plan_cmd))
     app.add_handler(CommandHandler("cards", cards_cmd))
     app.add_handler(CommandHandler("food", food_cmd))
+    app.add_handler(CommandHandler("tours", tours_cmd))
+    app.add_handler(CommandHandler("gyg", tours_cmd))
     app.add_handler(CommandHandler("madrid", madrid))
     app.add_handler(CommandHandler("barcelona", barcelona))
     app.add_handler(CommandHandler("rome", rome))
@@ -68,6 +75,7 @@ def main():
     app.add_handler(MessageHandler(filters.PHOTO, photo_chat))
     app.add_handler(MessageHandler(FULL_PLAN_FILTER, cards_cmd))
     app.add_handler(MessageHandler(FOOD_FILTER, food_cmd))
+    app.add_handler(MessageHandler(TOURS_FILTER, tours_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, chat))
     logging.info("Бот запущен")
     app.run_polling()
