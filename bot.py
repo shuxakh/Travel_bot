@@ -5,7 +5,7 @@ from handlers import (
     start, madrid, barcelona, rome, milan,
     today, budget, transport, map_cmd, help_cmd, chat, photo_chat
 )
-from api_handlers import weather_cmd, currency_cmd, apis_cmd
+from api_handlers import weather_cmd, currency_cmd, apis_cmd, flight_cmd
 from plan_handlers import plan_cmd
 
 logging.basicConfig(
@@ -27,6 +27,7 @@ def main():
     app.add_handler(CommandHandler("map", map_cmd))
     app.add_handler(CommandHandler("weather", weather_cmd))
     app.add_handler(CommandHandler("currency", currency_cmd))
+    app.add_handler(CommandHandler("flight", flight_cmd))
     app.add_handler(CommandHandler("apis", apis_cmd))
     app.add_handler(CommandHandler("help", help_cmd))
     app.add_handler(MessageHandler(filters.PHOTO, photo_chat))
