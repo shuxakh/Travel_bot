@@ -1,4 +1,3 @@
-import asyncio
 import logging
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
 from config import TELEGRAM_BOT_TOKEN
@@ -12,9 +11,8 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
-async def main():
+def main():
     app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
-
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("madrid", madrid))
     app.add_handler(CommandHandler("barcelona", barcelona))
@@ -26,9 +24,8 @@ async def main():
     app.add_handler(CommandHandler("map", map_cmd))
     app.add_handler(CommandHandler("help", help_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, chat))
-
     logging.info("Бот запущен")
-    await app.run_polling()
+    app.run_polling()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
