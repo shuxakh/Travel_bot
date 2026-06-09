@@ -9,7 +9,10 @@ from telegram.ext import ContextTypes
 
 from config import OPENAI_API_KEY
 from handlers import ask_gpt
-from external_apis import get_weather, detect_city, current_trip_city
+from external_apis import (
+    get_weather, get_trip_weather, detect_city_for_weather,
+    current_trip_city, is_trip_weather_question
+)
 
 logger = logging.getLogger(__name__)
 client = AsyncOpenAI(api_key=OPENAI_API_KEY, timeout=45)
@@ -67,8 +70,11 @@ async def voice_chat(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"🎙 Я понял:\n{text}")
 
         if WEATHER_VOICE_RE.search(text):
-            city_key = detect_city(text, current_trip_city())
-            answer = await get_weather(city_key)
+            city_key = detect_city_for_weather(text, current_trip_city())
+            if is_trip_weather_question(text):
+                answer = await get_trip_weather(city_key)
+            else:
+                answer = await get_weather(city_key)
         else:
             answer = await ask_gpt(user_id, text)
 
